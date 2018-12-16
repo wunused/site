@@ -1,0 +1,80 @@
+baseurl = "https://www.wunused.com/"
+languageCode = "en-us"
+title = "-Wunused"
+theme = "cactus"                # https://github.com/monkeyWzr/hugo-theme-cactus
+defaultContentLanguage = "en"
+
+[author]
+    name = "Andreas"
+
+[menu]
+    [[menu.main]]
+        name = "Home"
+        url = "/"
+        weight = 1
+
+    [[menu.main]]
+        name = "About"
+        url = "/about/"
+        weight = 2
+
+    [[menu.main]]
+        name = "Posts"
+        url = "/posts/"
+        weight = 3
+
+    [[menu.main]]
+        name = "Presentations"
+        url = "/presentations/"
+        weight = 4
+
+    [[menu.main]]
+        name = "Projects"
+        url = "/projects/"
+        weight = 5
+
+[params]
+    dateform        = "Jan 2, 2006"
+    dateformShort   = "Jan 2"
+    dateformNum     = "2006-01-02"
+    dateformNumTime = "2006-01-02 15:04 -0700"
+
+    colortheme = "dark" # dark, light, white, or classic
+    description = "'Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away' --Antoine de Saint-Exupéry"
+
+    # Used as the link for the "writings" title on the homepage
+    mainSection = "posts"
+
+    # Show only the 5 most recent posts (default)
+    showAllPostsOnHomePage = false
+    postsOnHomePage = 5
+
+    # Can show projects lists if this is enabled.
+    # showProjectsList = true
+    # projectsUrl = "https://github.com/wunused"
+
+    # Social Icons
+    # name key expects a Font Awesome Icon https://fontawesome.com/icons?d=gallery&p=2&s=brands
+    [[params.social]]
+        name = "github"
+        link = "https://github.com/wunused"
+
+    [[params.social]]
+        name = "twitter"
+        link = "https://twitter.com/__huckfinn__"
+
+    [[params.social]]
+        name = "email"
+        link = "andreas@wunused.com"
+
+[markup]
+    [markup.highlight]
+        codeFences = true
+        guessSyntax = false
+        hl_Lines = ""
+        lineNoStart = 1
+        lineNos = false
+        lineNumbersInTable = true
+        noClasses = true
+        style = "monokai"
+        tabWidth = 4

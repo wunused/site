@@ -1,0 +1,39 @@
+To deploy site:
+
+Create AWS account with appropriate users.
+
+- https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html
+
+Create and configure AWS S3 bucket with simple HTML.
+
+- https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html
+- https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-domain-walkthrough.html#upload-website-content
+
+Point Namecheap domain to S3 bucket.
+
+- https://dev.to/sudhachandranbc/host-static-website-in-s3-with-namecheap-dns-2ioc
+- https://www.namecheap.com/support/knowledgebase/article.aspx/10371/2208/how-do-i-link-my-domain-to-amazon-web-services/
+
+Create AWS Route 53 Hosted Zone and set namecheap name servers to use Hosted
+Zone.
+
+- https://benjamincongdon.me/blog/2017/06/13/How-to-Deploy-a-Secure-Static-Site-to-AWS-with-S3-and-CloudFront/#step-4-configure-route53-to-route-traffic-from-our-custom-domain
+- https://faun.pub/how-to-migrate-your-domain-to-route53-and-connect-it-to-an-ec2-instance-93698085f0b3
+
+(Optional) AWS Route 53 is now the domain registrar. If using this domain for
+things like Google Workspace, MX records need to be set in AWS Route 53 Hosted
+Zone for the Google domain verification.
+
+Configure CloudFront for HTTPS support.
+
+- https://aws.amazon.com/premiumsupport/knowledge-center/cloudfront-https-requests-s3/
+
+Push source to GitHub and configure GitHub Actions to run Hugo Deploy to S3
+bucket on push to master. Additionally create IAM user with only enough
+permissions required by the CI/CD pipeline (see first link at
+capgemini.github.io).
+
+- https://capgemini.github.io/development/Using-GitHub-Actions-and-Hugo-Deploy-to-Deploy-to-AWS/
+- https://aws.amazon.com/blogs/infrastructure-and-automation/building-a-ci-cd-pipeline-for-hugo-websites/
+- https://gohugo.io/hosting-and-deployment/hugo-deploy/
+- https://github.com/marketplace/actions/s3-deploy
