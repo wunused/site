@@ -51,6 +51,7 @@ jobs:
               uses: actions/download-artifact@v2
               with:
                   name: public-content
+                  path: ./public/
 
             - name: Configure AWS credentials
               uses: aws-actions/configure-aws-credentials@v1
@@ -61,7 +62,7 @@ jobs:
 
             - name: Deploy static site to S3 bucket
               run: |
-                  aws s3 sync public/ s3://${{ secrets.AWS_S3_BUCKET }} --delete
+                  aws s3 sync ./public/ s3://${{ secrets.AWS_S3_BUCKET }} --delete
 
             - name: Invalidate CloudFront cache
               run: |
