@@ -44,6 +44,7 @@ jobs:
 
     deploy:
         name: Upload to AWS S3 and invalidate in CloudFront.
+        # Ensure that build job executes before deploy job.
         needs: build
         runs-on: ubuntu-20.04
         steps:
