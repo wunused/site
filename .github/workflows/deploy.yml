@@ -1,0 +1,63 @@
+# Workflow to build site and deploy it to AWS S3 bucket for hosting and
+# invalidate CloudFront cache. This will occur on any push to main branch.
+
+name: deploy
+
+on:
+    push:
+        branches:
+            - main
+
+    # Allows you to run this workflow manually from the Actions tab.
+    workflow_dispatch:
+
+jobs:
+
+    build:
+        name: Generate content using Hugo.
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Install Hugo
+              run: |
+                  sudo apt-get update && sudo apt-get install -y hugo
+                  hugo version
+
+            - name: Generate content
+              run: |
+                  hugo --minify
+
+            - name: Upload artifacts.
+              uses: actions/upload-artifact@v2
+              with:
+                  name: public-content
+                  path: ./public/
+
+    deploy:
+        name: Upload to AWS S3 and invalidate in CloudFront.
+        needs: build
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Download generated content for hosting
+              uses: actions/download-artifact@v2
+              with:
+                  name: public-content
+
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  aws-region: ${{ secrets.AWS_REGION }}
+
+            - name: Deploy static site to S3 bucket
+              run: |
+                  aws s3 sync ./public/ s3://${{ secrets.AWS_S3_BUCKET }} --delete
+
+            - name: Invalidate CloudFront cache
+              run: |
+                  aws cloudfront create-invalidation \
+                  --distribution-id ${{ secrets.DISTRIBUTION_ID }} \
+                  --paths "/*"
