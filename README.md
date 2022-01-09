@@ -12,8 +12,8 @@ Ensure that submodules have been initialized and updated.
 With docker installed, run:
 
 ```bash
-$ docker build -t site:latest .
-$ docker run --rm -it -p 1313:1313 site:latest
+$ docker build -t wunused-site:latest .
+$ docker run --rm -it -p 1313:1313 -v $(pwd):/site wunused-site:latest
 ```
 
 Browse to localhost:1313.
