@@ -3,11 +3,9 @@ date: "2022-01-15"
 author: "Andreas"
 ---
 
-Much of what I have learned about computer security is contained in accessible
-resources. I frequently refer back to these materials, and frequently recommend
-them to others. This page is my attempt at indexing some of the resources to
-make references and recommendations easier. I intend for this collection to
-grow as I learn and discover more.
+I've learned a lot about computer security from accessible resources. Here's a
+list of recommendations for others, and I'll try to update it as I discover
+more.
 
 <!-- vim-markdown-toc GitLab -->
 
