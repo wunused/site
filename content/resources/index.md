@@ -3,9 +3,9 @@ date: "2022-01-15"
 author: "Andreas"
 ---
 
-I've learned a lot about computer security from accessible resources. Here's a
-list of recommendations for others, and I'll try to update it as I discover
-more.
+I've learned a lot about computer security from available and accessible
+resources. This is a short, incomplete list of some that I have recommended in
+the past. I'll try to update it as I discover more.
 
 <!-- vim-markdown-toc GitLab -->
 
