@@ -3,10 +3,6 @@ date: "2022-01-15"
 author: "Andreas"
 ---
 
-I've learned a lot about computer security from available and accessible
-resources. This is a short, incomplete list of some that I have recommended in
-the past. I'll try to update it as I discover more.
-
 <!-- vim-markdown-toc GitLab -->
 
 * [CTF](#ctf)
@@ -27,12 +23,9 @@ the past. I'll try to update it as I discover more.
 
 # CTF
 
-To practice, I participate in Capture the Flag competitions.
-
 ## Getting Started
 
-CTF can feel daunting at the beginning. This section lists some early learning
-materials to help get started:
+CTF can feel daunting at the beginning. These can help get started:
 
 [Blog post by Jaime Lightfoot](https://jaimelightfoot.com/blog/so-you-want-to-ctf-a-beginners-guide/)
 : Describes what CTFs are, how to get involved, and points to many more
@@ -49,9 +42,6 @@ reviewing the write-ups of solutions from past competitions that are hosted
 here.
 
 ## Binary Reverse Engineering and Exploitation
-
-Binary reverse engineering and binary exploitation are two fundamental skills
-tested by CTF competitions.
 
 [*Hacking: The Art of Exploitation*, by Jon Erickson](https://www.amazon.com/Hacking-Art-Exploitation-Jon-Erickson/dp/1593271441)
 : An introductory book with practical (but dated) examples for learning binary
@@ -76,12 +66,7 @@ expert.
 ## Cryptography
 
 [cryptopals](https://cryptopals.com/) (sometimes referred to as the Matasano crypto challenges)
-: A set of applied cryptography challenges that build on fundamental concepts,
-created by
-[Thomas Ptacek](https://twitter.com/tqbf),
-[Sean Devlin](https://twitter.com/spdevlin),
-[Alex Balducci](https://twitter.com/iamalexalright), and
-[Marcin Wielgoszewski](https://twitter.com/marcinw).
+: A set of applied cryptography challenges that build on fundamental concepts.
 
 ## Misc
 
@@ -100,8 +85,6 @@ teams as they got started.
 
 # News
 
-To stay relevant, I try to keep up with computer security news.
-
 [Risky Business](https://risky.biz/)
 : Podcast hosted by Patrick Gray covering computer security current affairs and
 often has insightful sponsor interviews.
@@ -113,8 +96,6 @@ often has insightful sponsor interviews.
 : Lots of noise, but also occasional quality insights from people I respect.
 
 # Books
-
-To learn, I read.
 
 ## Programming Best Practices
 
