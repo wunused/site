@@ -25,14 +25,9 @@ staticDir = ['static']
         weight = 3
 
     [[menu.main]]
-        name = "Presentations"
-        url = "/presentations/"
+        name = "Publications"
+        url = "/publications/"
         weight = 4
-
-    [[menu.main]]
-        name = "Projects"
-        url = "/projects/"
-        weight = 5
 
 [params]
     dateform        = "Jan 2, 2006"
