@@ -1,14 +1,38 @@
 ---
-title: "TODO: Divergent Reps, SQLite CVE-2022-35737"
-date: 2023-01-01
+title: "SQLite CVE-2022-35737 and Divergent Representations"
+date: 2023-05-12
 ---
 
-SQLite CVE-2022-35737: https://blog.trailofbits.com/2022/10/25/sqlite-vulnerability-july-2022-library-api/
+Last summer, I discovered and disclosed SQLite CVE-2022-35737 while working
+with Trail of Bits. There's a lot that has been said about the bug, even though
+I discovered it accidentally. I use this post to summarize the story and
+collect the different pieces in one place.
 
-Divergent reps: https://blog.trailofbits.com/2022/11/10/divergent-representations-variable-overflows-c-compiler/
+I first described the vulnerability in a
+[blog post](https://blog.trailofbits.com/2022/10/25/sqlite-vulnerability-july-2022-library-api/)
+hosted by Trail of Bits. The disclosure was well received, and I was very
+grateful for the kind words about the blog post in the
+[Hacker News discussion](https://news.ycombinator.com/item?id=33329184) and
+the
+[Reddit r/programming post](https://www.reddit.com/r/programming/comments/ydb4uk/stranger_strings_an_exploitable_flaw_in_sqlite/). Even though the vulnerability is non-trivial to exploit, the
+security community took notice. Credit is due to the SQLite developers who took
+quick action to patch the vulnerability, and to the CERT/CC team for helping us
+disclose it.
 
-Hackernews divergent reps discussion: https://news.ycombinator.com/item?id=33546491
+While trying to exploit the vulnerability, I discovered that a compiler
+optimization created a "divergent representation" in the version of SQLite that
+I was analyzing. The divergent representation enabled me to overwrite the saved
+return address on the stack and reach the vulnerable function return statement,
+which I would not otherwise be able to do. I wrote a separate
+[blog post about divergent representations](https://blog.trailofbits.com/2022/11/10/divergent-representations-variable-overflows-c-compiler/). The
+[Hacker News discussion](https://news.ycombinator.com/item?id=33546491) about
+divergent representations was less enthusiastic than the one about the SQLite
+vulnerability.
 
-Hackernews SQLite CVE-2022-35737 discussion: https://news.ycombinator.com/item?id=33329184
-
-r/programming SQLite CVE-2022-35737 discussion: https://www.reddit.com/r/programming/comments/ydb4uk/stranger_strings_an_exploitable_flaw_in_sqlite/
+I followed this line of work on divergent representations by submitting a paper
+to the Workshop on Offensive Security (WOOT) '23, co-located with the IEEE
+Symposium on Security and Privacy (Oakland). In the paper, we describe
+divergent representations, show how one allows for the exploitation of SQLite
+CVE-2022-35737, and show that divergent representations occur with regular
+frequency. The paper was accepted, and I will present the work later this
+month.
