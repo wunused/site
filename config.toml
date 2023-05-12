@@ -41,7 +41,7 @@ staticDir = ['static']
     dateformNumTime = "2006-01-02 15:04 -0700"
 
     colortheme = "dark" # dark, light, white, or classic
-    description = "'Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away' --Antoine de Saint-Exupéry"
+    description = "I'm Andreas. I am interested in computer system security."
 
     # Used as the link for the "writings" title on the homepage
     mainSection = "posts"
