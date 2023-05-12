@@ -22,12 +22,12 @@ staticDir = ['static']
     [[menu.main]]
         name = "Posts"
         url = "/posts/"
-        weight = 3
+        weight = 4
 
     [[menu.main]]
         name = "Publications"
         url = "/publications/"
-        weight = 4
+        weight = 3
 
 [params]
     dateform        = "Jan 2, 2006"
