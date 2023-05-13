@@ -4,9 +4,9 @@ date: 2023-05-12
 ---
 
 Last summer, I discovered and disclosed SQLite CVE-2022-35737 while working
-with Trail of Bits. There's a lot that has been said about the bug, even though
-I discovered it accidentally. I use this post to summarize the story and
-collect the different pieces in one place.
+with Trail of Bits. I've written about different aspects of the vulnerability
+in a few different places, and received feedback from online communities. This
+post collects the different pieces of the story into one place.
 
 I first described the vulnerability in a
 [blog post](https://blog.trailofbits.com/2022/10/25/sqlite-vulnerability-july-2022-library-api/)
@@ -14,10 +14,10 @@ hosted by Trail of Bits. The disclosure was well received, and I was very
 grateful for the kind words about the blog post in the
 [Hacker News discussion](https://news.ycombinator.com/item?id=33329184) and
 the
-[Reddit r/programming post](https://www.reddit.com/r/programming/comments/ydb4uk/stranger_strings_an_exploitable_flaw_in_sqlite/). Even though the vulnerability is non-trivial to exploit, the
-security community took notice. Credit is due to the SQLite developers who took
-quick action to patch the vulnerability, and to the CERT/CC team for helping us
-disclose it.
+[Reddit r/programming post](https://www.reddit.com/r/programming/comments/ydb4uk/stranger_strings_an_exploitable_flaw_in_sqlite/).
+Even though the vulnerability is non-trivial to exploit, the security community
+took notice. Credit is due to the SQLite developers who took quick action to
+patch the vulnerability, and to the CERT/CC team for helping us disclose it.
 
 While trying to exploit the vulnerability, I discovered that a compiler
 optimization created a "divergent representation" in the version of SQLite that
@@ -32,7 +32,7 @@ vulnerability.
 I followed this line of work on divergent representations by submitting a paper
 to the Workshop on Offensive Security (WOOT) '23, co-located with the IEEE
 Symposium on Security and Privacy (Oakland). In the paper, we describe
-divergent representations, show how one allows for the exploitation of SQLite
-CVE-2022-35737, and show that divergent representations occur with regular
-frequency. The paper was accepted, and I will present the work later this
-month.
+divergent representations, show how a divergent representation enables the
+exploitation of SQLite CVE-2022-35737, and show that divergent representations
+occur with regular frequency. The paper was accepted, and I will present the
+work later this month.
