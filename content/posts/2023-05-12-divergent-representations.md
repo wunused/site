@@ -29,7 +29,8 @@ which I would not otherwise be able to do. I wrote a separate
 divergent representations was less enthusiastic than the one about the SQLite
 vulnerability.
 
-I followed this line of work on divergent representations by submitting a paper
+I followed this line of work on divergent representations by submitting a
+[paper](/publications/divergent-reps.pdf)
 to the Workshop on Offensive Security (WOOT) '23, co-located with the IEEE
 Symposium on Security and Privacy (Oakland). In the paper, we describe
 divergent representations, show how a divergent representation enables the

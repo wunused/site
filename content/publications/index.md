@@ -1,10 +1,9 @@
 ---
-date: "2021-04-01"
 author: "Andreas"
 ---
 
-```
-wunused.c:7:12: warning: unused variable ‘publications’ [-Wunused-variable]
-     char **publications;
-            ^~~~~~~~~~~~
-```
+### 2023
+
+* **Andreas D. Kellas**, Alan Cao, Peter Goodman, and Junfeng Yang.
+  [*Divergent Representations: When Compiler Optimizations Enable Exploitation*](/publications/divergent-reps.pdf).
+  IEEE Workshop on Offensive Technologies (WOOT), 2023.
