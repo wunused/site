@@ -57,7 +57,7 @@ staticDir = ['static']
 
     [[params.social]]
         name = "twitter"
-        link = "https://twitter.com/__huckfinn__"
+        link = "https://twitter.com/__wunused__"
 
     [[params.social]]
         name = "email"
