@@ -2,9 +2,9 @@
 author: "Andreas"
 ---
 
-* QUACK: Hindering Deserialization Attacks via Static Duck Typing \
+* [QUACK: Hindering Deserialization Attacks via Static Duck Typing](https://www.ndss-symposium.org/wp-content/uploads/2024-1015-paper.pdf) \
     Yaniv David, Neophytos Christou, **Andreas D. Kellas**, Vasileios P. Kemerlis, and Junfeng Yang \
-    To appear in *NDSS*, Feb 2024.
+    *Network and Distributed System Security Symposium (NDSS)*, Feb 2024.
 
 * [Divergent Representations: When Compiler Optimizations Enable Exploitation](/publications/divergent-reps.pdf) \
   **Andreas D. Kellas**, Alan Cao, Peter Goodman, and Junfeng Yang \
