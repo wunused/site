@@ -271,6 +271,15 @@ Joern crashes, I always first attempt the run with no changes, and only triage
 further if the crash is repeatable. I have not identified the root cause of
 this non-determinism.
 
+### Building inheritance trees
+
+Future issue:
+
+Given some typeDecl that inherits from other classes, I want to be able to
+query for all members of the typeDecl, including the inherited members.
+This may require semantic analysis of the initialization function, but it
+should be doable in many common cases.
+
 ## Language-Specific Notes
 
 ### PHP
