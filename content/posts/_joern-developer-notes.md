@@ -15,14 +15,14 @@ post helpful, great!
 Official Joern resources are the authoritative sources of information. The
 Joern team maintains [official documentation](https://docs.joern.io/), a
 [Discord community](https://discord.com/invite/vv4MH284Hc), and [GitHub
-Issues](https://github.com/joernio/joern/issues). I will aim to refer to them
+Issues](https://github.com/joernio/joern/issues). I aim to refer to them
 rather than repeat them.
 
 These notes are (mostly) accurate for the (outdated) Joern version TODO, which
 is the version that I forked from. I may update this post in the future for a
 more recent Joern version.
 
-This post contains notes on:
+My notes cover:
 * Setting up Joern;
 * Using Joern to analyze programs; and
 * Developing Joern.
@@ -192,16 +192,14 @@ structure of class and type definitions, particularly in the
 
 ## Developing Joern
 
-My Joern development workflow:
+This section contains notes for modifying Joern, organized roughly according to
+my development workflow.
 
 - **Debug**: Use print-style debugging and graph visualizations.
-- **Develop**: Implement feature or fix.
-- **Test**: Add test cases for new functionality or fix, ensure all pass.
+- **Develop**: Understand Joern's code organization to implement feature or
+  fix.
+- **Test**: Add test cases for new functionality or fix, and ensure all pass.
 - **Format**: Run the automatic formatter.
-
-Finally, Joern development moves fast, so commit changes back upstream sooner
-rather than later. If you don't, you end up like me, maintaining a fork
-multiple major releases out of date.
 
 ### Debugging
 
@@ -229,6 +227,42 @@ visualizing and exporting the CPG.
 Joern docs provide advice for configuring an interactive Scala debugger, but I
 have not figured this out yet for VSCode and Metals. I will update this post
 when I do.
+
+### Development - Code Organization
+
+The Joern code is very modular, with significant class inheritance. Generally,
+common analysis passes are implemented in a generic (non-language specific)
+module, and then specialized and registered for each language front-end.
+
+The generic passes are in the `joern-cli/frontends/x2cpg/src/main/scala/io/joern/x2cpg/passes/`
+directory, while the specialized passes are in:
+
+TODO
+
+For example, the generic `InheritanceFullNamePass` is implemented in:
+`joern-cli/frontends/x2cpg/src/main/scala/io/joern/x2cpg/passes/frontend/XInheritanceFullNamePass.scala`.
+
+The Python specialization of
+
+
+
+Registered passes for language specific CPG generation:
+`console/src/main/scala/io/joern/console/cpgcreation/PythonSrcCpgGenerator.scala`
+
+Language specific front end passes:
+`joern-cli/frontends/pysrc2cpg/src/main/scala/io/joern/pysrc2cpg/PythonInheritanceNamePass.scala`
+
+Generic front end passes:
+`joern-cli/frontends/x2cpg/src/main/scala/io/joern/x2cpg/passes/frontend/XInheritanceFullNamePass.scala`
+
+Analysis entry:
+`joern-cli/frontends/pysrc2cpg/src/main/scala/io/joern/pysrc2cpg/CodeToCpg.scala`
+- replaces carriage returns with line breaks.
+- parses the code into Python AST nodes
+- visits each Python AST node and converts it into a Joern CPG AST node
+
+Invocation path:
+- PythonSrcCpgGenerator -> pysrc2cpg.Main -> Py2CpgOnFileSystem
 
 ### Testing
 
@@ -279,26 +313,6 @@ formatted, the tests will fail. Ensure all tests pass before contributing code
 upstream, because the failed tests will prevent the contribution from being
 accepted.
 
-### Code Organization
-
-Registered passes for language specific CPG generation:
-`console/src/main/scala/io/joern/console/cpgcreation/PythonSrcCpgGenerator.scala`
-
-Language specific front end passes:
-`joern-cli/frontends/pysrc2cpg/src/main/scala/io/joern/pysrc2cpg/PythonInheritanceNamePass.scala`
-
-Generic front end passes:
-`joern-cli/frontends/x2cpg/src/main/scala/io/joern/x2cpg/passes/frontend/XInheritanceFullNamePass.scala`
-
-Analysis entry:
-`joern-cli/frontends/pysrc2cpg/src/main/scala/io/joern/pysrc2cpg/CodeToCpg.scala`
-- replaces carriage returns with line breaks.
-- parses the code into Python AST nodes
-- visits each Python AST node and converts it into a Joern CPG AST node
-
-Invocation path:
-- PythonSrcCpgGenerator -> pysrc2cpg.Main -> Py2CpgOnFileSystem
-
 ## Miscellanea
 
 ### Pronunciation
@@ -323,6 +337,12 @@ to avoid confusion.
 - Discord Server
 - GitHub Issues
 - Official [Scala 3 docs](https://docs.scala-lang.org/scala3/book/introduction.html)
+
+### Contributing
+
+Finally, Joern development moves fast, so commit changes back upstream sooner
+rather than later. If you don't, you end up like me, maintaining a fork
+multiple major releases out of date.
 
 ## Appendix: Dockerfile
 
