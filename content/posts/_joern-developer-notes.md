@@ -8,7 +8,7 @@ analysis tool. I use it as a foundation for multiple projects, and I enjoy
 hacking on it when I need to enhance its existing features.
 
 This post is a collection of notes from working on Joern (DISCLAIMER: I am not
-a Joern maintainer). It is written primarily for my collaborators and me to
+a Joern maintainer). It is written primarily for collaborators and myself to
 reference.
 
 Official Joern resources are the authoritative sources of information. The
@@ -17,7 +17,7 @@ Joern team maintains [official documentation](https://docs.joern.io/), a
 Issues](https://github.com/joernio/joern/issues). I aim to refer to and
 supplement them rather than repeat their contents.
 
-These notes are (mostly) accurate for the (outdated) Joern version 2.0.385,
+These notes aim to be accurate for the (outdated) Joern version 2.0.385,
 which is the version I forked from. I may update this post in the future
 for a more recent Joern version.
 
@@ -50,10 +50,11 @@ install Joern dependencies, and a configuration file for VSCode
 plugins for Scala development, like the Metals language server.
 
 Unfortunately, the provided Dockerfile results in errors for
-me[^dockerfile-issues], so
-I replace it with my own (see the [Appendix](#appendix-dockerfile)). I also add
-tools for my development tasks: for example, Joern depends on a PHP utility to
-parse PHP source code, so I add these dependencies to the Dockerfile.
+me[^dockerfile-issues], so I replace it with my own (see the
+[Appendix](#appendix-dockerfile)). I also add tools for my development tasks:
+for example, Joern depends on a PHP utility
+([PHP-Parser](https://github.com/nikic/PHP-Parser)) to parse PHP source code,
+so I add these dependencies to the Dockerfile.
 
 To use the containerized environment, open the Joern repository in VSCode and
 click the "`Reopen folder to develop in a container`" button when it appears in
@@ -199,11 +200,6 @@ $ ./joern-cli/target/universal/stage/pysrc2cpg -J-Xmx128g <path-to-target-code> 
 $ ./joern -J-Xmx128g <output>.cpg
 ```
 
-**Joern seems unable to parse PHP code.** Joern has PHP dependencies to parse
-PHP code (particularly, [PHP-Parser](https://github.com/nikic/PHP-Parser)).
-*Install PHP dependencies and refer to the
-[Development Environment Setup Section](#development-environment).*
-
 **Python type declaration inheritance information is in both
 `inheritsFromTypeFullName` field and the `baseType` field, and sometimes they
 disagree.** The `inheritsFromTypeFullName` field contains string names of the
@@ -239,7 +235,7 @@ joern-cli/frontends/php2cpg/src/main/scala/io/joern/php2cpg/Main.scala
 ```
 
 For example, in the Python frontend the `Frontend.cmdLineParse` method (below)
-returns an `OParser` object containing all of the registered arguments. Some
+returns an `OParser` object containing all registered arguments. Some
 arguments (e.g., `"venvDir"`) are explicitly registered in the method, but
 others are included from the `XTypeRecovery.parserOptions` definition, so
 follow that definition to determine the other available arguments.
