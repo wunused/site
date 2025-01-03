@@ -92,41 +92,64 @@ from within the source code.
 The `joern-parse` utility constructs a CPG from the target source code:
 
 ```
-TODO
+# ./joern-parse <path-to-target-directory> -o <path-to-output.cpg>
 ```
 
-You can optionally invoke the language-specific frontend parsers directly
-(TODO):
+You can optionally invoke the language-specific frontend parsers directly, but
+note that these construct an AST, not the full CPG. See [Analysis
+Gotchas](#analysis-gotchas) for more.
 
 ```
-
+# ./joern-cli/target/universal/stage/pysrc2cpg <path-to-target-directory> -o <path-to-output.cpg>
 ```
 
 Joern has generic optional parameters, as well as language-specific optional
 parameters:
 
 ```
+# ./joern-parse --language PYTHONSRC <path-to-target-directory> -o <path-to-output.cpg> --frontend-args --venvDirs=venv --type-prop-iterations=3
 
+# ./joern-cli/target/universal/stage/pysrc2cpg <path-to-target-directory> -o <path-to-output.cpg> --venvDirs=venv --type-prop-iterations=3
 ```
 
-Not all the language-specific optional flags are documented (TODO),
-or printed by the CLI help message. Source code files can help identify all
-optional flags (see [Finding Frontend Arguments](#frontend-arguments)).
+Some, but not all, language specific arguments are
+[documented](https://docs.joern.io/frontends/). The best way to identify the
+arguments available is by reading the source code (see [Finding Frontend
+Arguments](#frontend-arguments)).
 
 ### Querying
 
-The `joern` utility loads the CPG to query. By default it starts a Scala REPL
-to interact with the CPG.
+The `joern` utility takes either 1) the path to the target source code or 2)
+the path to a CPG. I prefer to run `joern` with the CPG as input.
+
+`joern` loads the CPG and begins an interactive session (this is really a
+Scala REPL, which gives you a lot of power and flexibility).
 
 ```
+# ./joern <path-to-cpg>.cpg
+<snip>
+     ??? ??????? ??????????????? ????   ???
+     ?????????????????????????????????  ???
+     ??????   ?????????  ?????????????? ???
+??   ??????   ?????????  ??????????????????
+????????????????????????????  ?????? ??????
+ ??????  ??????? ???????????  ??????  ?????
+Version: 2.0.385+8-c3afaf32+20241004-1956
+Type `help` to begin
 
+
+joern>
 ```
 
 Usually, I automate my analyses with the `--script` option.
 
 ```
-TODO
+./joern --script <path-to-script>.sc --param inputPath="<path-to-cpg>.cpg"
 ```
+
+Note that the example above assumes that the script receives the path to the
+CPG to analyze through a parameter named "inputPath"; this is particular to the
+script.
 
 ### Analysis Gotchas
 
