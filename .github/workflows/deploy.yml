@@ -18,7 +18,7 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
               with:
                   submodules: recursive
 
@@ -36,7 +36,7 @@ jobs:
                   test -f public/index.html
 
             - name: Upload artifacts.
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
                   name: public-content
                   path: public/
@@ -49,13 +49,13 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - name: Download generated content for hosting
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v4
               with:
                   name: public-content
                   path: ./public/
 
             - name: Configure AWS credentials
-              uses: aws-actions/configure-aws-credentials@v1
+              uses: aws-actions/configure-aws-credentials@v4
               with:
                   aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
                   aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
