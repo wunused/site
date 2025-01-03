@@ -7,10 +7,9 @@ date: 2024-12-31
 analysis tool. I use it as a foundation for multiple projects, and I enjoy
 hacking on it when I need to enhance its existing features.
 
-This post contains my reference notes from hacking on Joern (disclaimer: I am
-not a Joern maintainer). The post is written for my future self and
-collaborators to reference as we work. If anyone else finds this helpful,
-great!
+This post is a collection of notes from working on Joern (DISCLAIMER: I am not
+a Joern maintainer). It is written primarily for my collaborators and me to
+reference.
 
 Official Joern resources are the authoritative sources of information. The
 Joern team maintains [official documentation](https://docs.joern.io/), a
@@ -33,37 +32,40 @@ This post contains my notes on:
 
 ## Joern Setup
 
-This section describes setting up Joern by:
+This section describes Joern setup for:
 
-1. [Configuring my development environment](#development-environment-setup); and
-2. [Building Joern from source code](#building-joern-from-source).
+1. [Configuring the development environment](#development-environment); and
+2. [Building Joern from source](#building-from-source).
 
-### Development Environment Setup
+### Development Environment
 
 The Joern docs provide an
-[IDE setup guide](https://docs.joern.io/developer-guide/ide-setup/) to help you
-configure your Joern development environment.
+[IDE setup guide](https://docs.joern.io/developer-guide/ide-setup/) to help
+configure the Joern development environment.
 
-I use VSCode as my code editor, so I benefit from the provided
-[VSCode dev container](https://code.visualstudio.com/docs/devcontainers/create-dev-container).
-The Joern repository provides a `.devcontainer` directory that contains a
-Dockerfile to install Joern dependencies, and a configuration file that sets up
-VSCode plugins for Scala development, like the Metals language server.
+I use VSCode as my code editor, so I benefit from the provided [VSCode dev
+container](https://code.visualstudio.com/docs/devcontainers/create-dev-container).
+The Joern repository provides a `.devcontainer` directory with a Dockerfile to
+install Joern dependencies, and a configuration file for VSCode
+plugins for Scala development, like the Metals language server.
 
-Unfortunately, using the provided Dockerfile image results in errors for me, so
+Unfortunately, the provided Dockerfile results in errors for
+me[^dockerfile-issues], so
 I replace it with my own (see the [Appendix](#appendix-dockerfile)). I also add
-tools for my development tasks; for example, Joern depends on a PHP utility to
+tools for my development tasks: for example, Joern depends on a PHP utility to
 parse PHP source code, so I add these dependencies to the Dockerfile.
 
 To use the containerized environment, open the Joern repository in VSCode and
 click the "`Reopen folder to develop in a container`" button when it appears in
-the bottom right. You can now open a terminal in VSCode from within the
-development container.
+the bottom right. Now, when you open a terminal in VSCode it will execute from
+within the container environment.
 
 All shell commands in this post are assumed to be executed from within the
 development container.
 
-### Building Joern from Source
+[^dockerfile-issues]: I don't know if these are me-issues or actual issues.
+
+### Building from Source
 
 In the development container, use the Scala Build Tools (`sbt`) utility to
 build Joern. `sbt` is already installed in the containerized development
@@ -71,9 +73,9 @@ environment.
 
 The `stage` command builds the Joern components.
 
-```
-# sbt clean
-# sbt stage
+```shell
+$ sbt clean
+$ sbt stage
 ```
 
 ## Analyzing Programs
@@ -83,7 +85,7 @@ This section describes the steps I use to analyze target programs:
 1. **[Parse](#parsing)** the target code into a Code Property Graph (CPG) saved on disk; and
 2. **[Query](#querying)** the CPG for my analysis tasks.
 
-I also document some "[gotchas](#analysis-gotchas)" that have tripped me up,
+I also document some "[gotchas](#analysis-gotchas)" that I have stumbled on,
 and tips for [finding undocumented analysis options](#finding-frontend-arguments)
 from within the source code.
 
@@ -91,30 +93,30 @@ from within the source code.
 
 The `joern-parse` utility constructs a CPG from the target source code:
 
-```
-# ./joern-parse <path-to-target-directory> -o <path-to-output.cpg>
+```shell
+$ ./joern-parse <path-to-target-code> -o <output>.cpg
 ```
 
 You can optionally invoke the language-specific frontend parsers directly, but
 note that these construct an AST, not the full CPG. See [Analysis
 Gotchas](#analysis-gotchas) for more.
 
-```
-# ./joern-cli/target/universal/stage/pysrc2cpg <path-to-target-directory> -o <path-to-output.cpg>
+```shell
+$ ./joern-cli/target/universal/stage/pysrc2cpg <path-to-target-code> -o <output>.cpg
 ```
 
 Joern has generic optional parameters, as well as language-specific optional
 parameters:
 
-```
-# ./joern-parse --language PYTHONSRC <path-to-target-directory> -o <path-to-output.cpg> --frontend-args --venvDirs=venv --type-prop-iterations=3
+```shell
+$ ./joern-parse --language PYTHONSRC <path-to-target-code> -o <output>.cpg --frontend-args --venvDirs=venv --type-prop-iterations=3
 
-# ./joern-cli/target/universal/stage/pysrc2cpg <path-to-target-directory> -o <path-to-output.cpg> --venvDirs=venv --type-prop-iterations=3
+$ ./joern-cli/target/universal/stage/pysrc2cpg <path-to-target-code> -o <output>.cpg --venvDirs=venv --type-prop-iterations=3
 ```
 
 Some, but not all, language specific arguments are
 [documented](https://docs.joern.io/frontends/). The best way to identify the
-arguments available is by reading the source code (see [Finding Frontend
+arguments available is to read the source code (see [Finding Frontend
 Arguments](#frontend-arguments)).
 
 ### Querying
@@ -125,8 +127,8 @@ the path to a CPG. I prefer to run `joern` with the CPG as input.
 `joern` loads the CPG and begins an interactive session (this is really a
 Scala REPL, which gives you a lot of power and flexibility).
 
-```
-# ./joern <path-to-cpg>.cpg
+```shell
+$ ./joern <path-to-cpg>.cpg
 <snip>
      ??? ??????? ??????????????? ????   ???
      ?????????????????????????????????  ???
@@ -143,85 +145,90 @@ joern>
 
 Usually, I automate my analyses with the `--script` option.
 
-```
-./joern --script <path-to-script>.sc --param inputPath="<path-to-cpg>.cpg"
+```shell
+$ ./joern --script <path-to-script>.sc --param inputPath="<path-to-cpg>.cpg"
 ```
 
 Note that the example above assumes that the script receives the path to the
-CPG to analyze through a parameter named "inputPath"; this is particular to the
+CPG through a parameter named "inputPath"; this is particular to the
 script.
 
 ### Analysis Gotchas
 
-**The target repository contains test files.** The target code may
-contain test files that are syntactically invalid (e.g., if the target code is
-a parser or interpreter), which can trip up Joern's parsing. Even when
-well-formatted, test files slow down analysis unnecessarily. It is best to
-exclude all test code from analysis whenever it is encountered.
+This section documents some **issues** I have stumbled on, and some
+*remediation* advice.
 
-**`joern-parse` outputs a different CPG than `pysrc2cpg` (or other frontends).
-The `joern-parse` utility runs all analysis passes to construct the full CPG.
-However, invoking the language-specific frontends directly results in ONLY
-constructing an AST; I believe frontends would be more aptly named `pysrc2ast`.
-See the [Development](development-code-organization) section for determining
-what passes are omitted when constructing an AST.
+**Analysis takes a long time or is producing error messages.** The target code
+may contain test files that are syntactically invalid (e.g., if the target code
+is a parser or interpreter), which Joern is unable to parse. Even when
+well-formatted, test files slow down analysis unnecessarily. *I recommend
+excluding all test code from analysis with the `--ignore-paths` frontend
+parameter.*
+
+**`joern-parse` outputs a different CPG than `pysrc2cpg` (or other
+frontends).** The `joern-parse` utility runs all analysis passes to construct
+the full CPG. However, invoking the language-specific frontends directly
+results in ONLY constructing an AST; I believe the frontends would be more aptly
+named e.g., `pysrc2ast`. *See the [Development](#development-code-organization)
+section for determining which passes are omitted when constructing an AST.*
 
 **`joern` crashes when loading CPGs**. Sometimes (non-deterministically) Joern
-crashes with an error that presents as a null reference when loading CPGs. I do
-not know the origin of the bug, but I always first retry the analysis with no
-changes. If the crash is repeatable, then I triage further. Note that this does
-not occur when loading ASTs generated by the language frontends, so I recommend
-preferring AST generation if you only need features from the AST.
+crashes due to a null reference when loading CPGs. I do not know the root cause
+of the bug, but I always first retry the analysis with no changes. If the crash
+is repeatable, then I triage further. Note that this does not occur when
+loading ASTs generated by the language frontends; *I recommend generating an
+AST if you don't need the full CPG analyses. Otherwise, retry the analysis
+after a crash.*
 
-**Nodes in the CPG have mangled names**. I have observed bugs that result from
-non-composing analysis passes executing twice; for example, a pass that takes
-short names of inherited classes and expands them to fully qualified names can
-only be run once, because running it twice results in doubly-expanded names
-(implementation specific). If you run `joern-parse` to generate a CPG, and then
-run `joern` to load the CPG, that pass may end up running twice. The name
-mangling is possibly a bug that can be fixed, perhaps by implementing the
-analysis to no-op if run a second time. This class of bugs can be frustrating
-to track down, because the test suite of unit tests will report different
-(correct results) due to only running the analysis once.
+**Nodes in the CPG have mangled names**. I have encountered bugs resulting from
+analysis passes executing twice; for example, a pass that takes short names of
+inherited classes and expands them to fully qualified names should only be run
+once, because running it twice could result in doubly-expanded names. When you
+run `joern-parse` to generate a CPG and then run `joern` to load the CPG, that
+pass may end up running twice. This (hypothetical) name mangling could be a bug
+fixed by causing the analysis to no-op when run a second time. *When tracking
+down these bugs, keep in mind that the unit test suite may report different
+(correct results) if the test fixture only runs the analysis once.*
 
-**Out of Memory errors.** You can adjust the amount of system RAM
-available to the JVM when Joern runs with the `-J-Xmx{X}g` option. See the
-[Joern docs](https://docs.joern.io/installation/#configuring-the-jvm-for-handling-large-codebases).
+**Out of Memory errors.** Joern permits specifying the maximum heap memory
+available to the JVM. *Use the `-J-Xmx{X}g` flag, and see the
+[Joern docs](https://docs.joern.io/installation/#configuring-the-jvm-for-handling-large-codebases).*
 
+```shell
+$ ./joern-cli/target/universal/stage/pysrc2cpg -J-Xmx128g <path-to-target-code> -o <output>.cpg
+$ ./joern -J-Xmx128g <output>.cpg
 ```
-# ./joern-cli/target/universal/stage/pysrc2cpg -J-Xmx128g <target-repo> -o <cpg-path>.cpg
-# ./joern -J-Xmx128g <cpg-path>.cpg
-```
 
-**Joern seems unable to parse PHP code.** To parse PHP code, Joern
-uses the [PHP-Parser](https://github.com/nikic/PHP-Parser) utility (see
-[Environment Setup](#environment-setup)).
+**Joern seems unable to parse PHP code.** Joern has PHP dependencies to parse
+PHP code (particularly, [PHP-Parser](https://github.com/nikic/PHP-Parser)).
+*Install PHP dependencies and refer to the
+[Development Environment Setup Section](#development-environment).*
 
 **Python type declaration inheritance information is in both
 `inheritsFromTypeFullName` field and the `baseType` field, and sometimes they
-conflict.** The `inheritsFromTypeFullName` field contains string names of the
+disagree.** The `inheritsFromTypeFullName` field contains string names of the
 type declaration's parent classes, but the `baseType` field contains references
 to `typ` nodes. The `typ` nodes are only constructed (I believe) from local
 information (as opposed to references in external libraries), while the
 `inheritsFromTypeFullName` fields can contain class names from external
-libraries. I generally query both fields when trying to determine parent types
-of a type declaration.
+libraries. *I recommend querying both fields to determine a type declaration's
+parent types.*
 
 ### Finding Frontend Arguments
 
-You may provide language-specific arguments to the Joern frontends, but knowing
+You can provide language-specific arguments to the Joern frontends, but knowing
 which are available is not always straightforward.
 Joern provides some
 [generic frontend documentation](https://docs.joern.io/frontends/) and some
 language-specific documentation (e.g, for
 [Python arguments](https://docs.joern.io/frontends/python/)), but not every
-argument for every frontend is documented.
+argument is documented.
 
 Language-specific frontend arguments are registered in parsers in the `Main`
 module for each frontend, in the `Frontend.cmdLineParser` method, located in
 files:
 
-```
+```bash
 joern-cli/frontends/<lang>2cpg/src/main/scala/io/joern/<lang>2cpg/Main.scala
 
 # Python frontend Main module
@@ -231,21 +238,47 @@ joern-cli/frontends/pysrc2cpg/src/main/scala/io/joern/pysrc2cpg/Main.scala
 joern-cli/frontends/php2cpg/src/main/scala/io/joern/php2cpg/Main.scala
 ```
 
-For example, in the Python frontend the `Frontend.cmdLineParse` method returns
-an `OParser` object containing all of the registered arguments. Some arguments
-are explicitly registered in the method, and others are referred to from the
-`XTypeRecovery.parserOptions` (so you need to follow that definition to
-determine those arguments).
+For example, in the Python frontend the `Frontend.cmdLineParse` method (below)
+returns an `OParser` object containing all of the registered arguments. Some
+arguments (e.g., `"venvDir"`) are explicitly registered in the method, but
+others are included from the `XTypeRecovery.parserOptions` definition, so
+follow that definition to determine the other available arguments.
 
-Similarly, the PHP frontend also explicitly registers arguments in the
-`cmdLineParser` method, but also includes arguments defined in
-`XTypeRecovery.parserOptions`, `XTypeStubsParser.parserOptions`, and
-`DependencyDownloadConfig.parserOptions`.
+```scala
+val cmdLineParser: OParser[Unit, Py2CpgOnFileSystemConfig] = {
+    val builder = OParser.builder[Py2CpgOnFileSystemConfig]
+    import builder._
+    // Defaults for all command line options are specified in Py2CpgOFileSystemConfig
+    // because Scopt is a shit library.
+    OParser.sequence(
+      programName("pysrc2cpg"),
+      opt[String]("venvDir")
+        .hidden() // deprecated; use venvDirs instead. Left this here to not break existing scripts.
+        .text("Virtual environment directory. If not absolute it is interpreted relative to input-dir.")
+        .action((dir, config) => config.withVenvDir(Paths.get(dir))),
+      opt[Seq[String]]("venvDirs")
+        .text("Virtual environment directories. If not absolute they are interpreted relative to input-dir.")
+        .action((value, config) => config.withVenvDirs(value.map(Paths.get(_)))),
+      opt[Boolean]("ignoreVenvDir")
+        .text("Specifies whether venv-dir is ignored. Default to true.")
+        .action((value, config) => config.withIgnoreVenvDir(value)),
+      opt[Seq[String]]("ignore-paths")
+        .text("Ignores the specified path from analysis. If not absolute it is interpreted relative to input-dir.")
+        .action((value, config) => config.withIgnorePaths(value.map(Paths.get(_)))),
+      opt[Seq[String]]("ignore-dir-names")
+        .text(
+          "Excludes all files where the relative path from input-dir contains at least one of names specified here."
+        )
+        .action((value, config) => config.withIgnoreDirNames(value)),
+      XTypeRecovery.parserOptions
+    )
+  }
+```
 
 ## Developing Joern
 
 This section contains notes for modifying Joern, organized roughly according to
-my development workflow.
+my development workflow:
 
 - **[Debugging](#debugging)**: Use print-style debugging and graph
   visualizations.
@@ -260,48 +293,43 @@ my development workflow.
 I debug issues by printing log messages, and by exporting visualizations of
 generated CPGs to confirm that they match my expectations.
 
-You can configure the log level printed to stdout with the `SL_LOGGING_LEVEL`
-environment variable:
+Configure the log level to stdout with the `SL_LOGGING_LEVEL` environment
+variable:
 
-```
-$ SL_LOGGING_LEVEL=DEBUG ./joern-parse <path to target code> -o target.cpg 2> target.log
+```shell
+$ SL_LOGGING_LEVEL=DEBUG ./joern-parse <path-to-target-code> -o target.cpg 2> target.log
 ```
 
 You can export visualizations of portions of the CPG. For example, to visualize
 the AST of a single method named `foo`:
 
-```
+```shell
 joern> cpg.method("foo").dotAst.l #> "foo.dot"
-joern> exit (TODO)
+joern> exit
 $ dot -Tpng foo.dot > foo.png
 ```
 
 The Joern docs provide [more examples](https://docs.joern.io/export/) for
 visualizing and exporting.
 
-I have not used interactive Scala debugging with VSCode and Metals, but I will
-update this post if I do incorporate it into my workflow.
+I don't know how to use interactive Scala debugging with VSCode and Metals, but
+I will update this post if I learn.
 
 ### Development (Code Organization)
 
-The Joern code is very modular, with significant class inheritance. This
-section provides some brief notes on how some language frontends tend to be
-organized. Generally, common analysis passes are implemented in a generic
-(non-language specific) abstract class, and then specialized and registered for
-each language front-end that uses them.
-
-The generic passes are implemented in the directory:
+This section provides some brief notes on how some language frontends tend to
+be organized. Generally, common analysis passes are implemented in a generic
+(non-language specific) abstract class, and then specialized in a concrete
+class and registered for a specific language frontend to use.
 
 Generic passes are in the `joern-cli/frontends/x2cpg/` directory and generally
-named with the preceding `X` to indicate
-* `joern-cli/frontends/x2cpg/src/main/scala/io/joern/x2cpg/passes/`
+named with a preceding `X`.
 
-The language-specialized passes are implemented in the directories:
-* `joern-cli/frontents/<lang>2cpg/src/main/scala/io/joern/<lang>2cpg/`
+The language-specialized passes are implemented in the `<lang>2cpg` directories.
 
 For example, the type recovery analysis passes:
 
-```
+```bash
 # Generic (abstract class) type recovery pass
 joern-cli/frontends/x2cpg/src/main/scala/io/joern/x2cpg/passes/frontend/XTypeRecovery.scala
 
@@ -317,13 +345,13 @@ analysis passes. This class is in the file
 `console/src/main/scala/io/joern/console/cpgcreation/PythonSrcCpgGenerator.scala`,
 alongside files containing the `CpgGenerator` classes for the other frontends.
 
-When the language-specific frontend is invoked outside of `joern-parse`, it
-only constructs an AST (discussed in [Analysis Gotchas](#analysis-gotchas)).
-The analyses used to construct the AST are typically registered in the
-`buildCpg` method in the `<lang>2Cpg` class. For example, the Python frontend
-defines a `Py2Cpg` class that invokes `CodeToCpg`, `ConfigFileCreationPass`,
-and `DependenciesFromRequirementsTxtPass`. The `CodeToCpg` pass performs the
-construction of the Joern CPG AST.
+When the language-specific frontend (e.g., `pysrc2cpg`) is invoked outside of
+`joern-parse`, it only constructs an AST (discussed in [Analysis
+Gotchas](#analysis-gotchas)). The analyses used to construct the AST are
+registered in the `buildCpg` method in the `<lang>2Cpg` class. For
+example, the Python frontend defines a `Py2Cpg` class that invokes `CodeToCpg`,
+`ConfigFileCreationPass`, and `DependenciesFromRequirementsTxtPass`. The
+`CodeToCpg` pass performs the construction of the AST in Joern.
 
 ### Testing
 
@@ -332,39 +360,62 @@ before any PR can be accepted.
 
 To locally run the full test suite:
 
-```
-# sbt test
+```shell
+$ sbt test
 ```
 
 To run a language-specific frontend test suite:
 
-```
-# sbt "pysrc2cpg / Test / testOnly"
-# sbt "php2cpg / Test / testOnly"
+```shell
+$ sbt "pysrc2cpg / Test / testOnly"
+$ sbt "php2cpg / Test / testOnly"
 ```
 
 To run a specific test suite:
 
-```
-# sbt "pysrc2cpg / Test / testOnly / *TypeRecoveryPassTests"
-# sbt "php2cpg / Test / testOnly / *CfgCreationPassTests"
+```shell
+$ sbt "pysrc2cpg / Test / testOnly / *TypeRecoveryPassTests"
+$ sbt "php2cpg / Test / testOnly / *CfgCreationPassTests"
 ```
 
 To add a test case or suite for a language frontend, find the appropriate suite
-file or directory in: `joern-cli/frontends/<language>2cpg/src/test/scala/io/joern/`.
+file or directory in: `joern-cli/frontends/<lang>2cpg/src/test/scala/io/joern/`.
 
 Test fixtures may not always faithfully represent the analysis passes that
 execute when `joern-parse` is invoked. Test fixtures have their own set of
 registered passes to test; ideally, the list of tested passes is kept in sync
-with the passes registered by the utility, sometimes they are not. **When you
-create a new analysis pass, be sure to register it with the analysis frontend
-AND the test fixture.**
+with the passes registered by the utility, but sometimes they are not. *When
+you create a new analysis pass, be sure to register it with the analysis
+frontend AND the test fixture.*
 
-For example, the passes tested by the Python frontend test suite are registered
+The passes tested by the Python frontend test suite are registered
 in the file:
 
-```
+```bash
 joern-cli/frontends/pysrc2cpg/src/test/scala/io/joern/pysrc2cpg/PySrc2CpgFixture.scala
+```
+
+```scala
+class PySrcTestCpg extends DefaultTestCpg with PythonFrontend with SemanticTestCpg {
+
+  <snip>
+
+  override def applyPostProcessingPasses(): Unit = {
+    new ImportsPass(this).createAndApply()
+    new PythonImportResolverPass(this).createAndApply()
+    new DynamicTypeHintFullNamePass(this).createAndApply()
+    new PythonInheritanceNamePass(this).createAndApply()
+    new PythonTypeRecoveryPassGenerator(this).generate().foreach(_.createAndApply())
+    new PythonTypeHintCallLinker(this).createAndApply()
+    new NaiveCallLinker(this).createAndApply()
+
+    // Some of passes above create new methods, so, we
+    // need to run the ASTLinkerPass one more time
+    new AstLinkerPass(this).createAndApply()
+    applyOssDataFlow()
+  }
+
+}
 ```
 
 ### Formatting
@@ -373,41 +424,39 @@ Code that is not formatted according to the project style guide will be
 rejected by the test suite and cannot be contributed upstream. Use the provided
 automatic formatter:
 
-```
-# sbt scalafmt
+```shell
+$ sbt scalafmt
 ```
 
 ## Concluding Miscellanea
 
-This post concludes with some miscellaneous notes.
-
 ### Contributing
 
-Finally, Joern development moves fast, so commit changes back upstream sooner
+Joern development moves fast, so commit changes back upstream sooner
 rather than later. If you don't, you end up like me, maintaining a fork
 multiple major releases out of date. See the
 [official contribution guidelines](https://docs.joern.io/developer-guide/contribution-guidelines/).
 
 ### Pronunciation
 
-I believe that the Joern name has German origins and is pronounced
-like the English word "yearn". This is how it sounds to me when Joern
-developers say it.
+I believe that the Joern name is German and is pronounced like the
+English word "yearn". This is what I think it sounds like when Joern developers
+say it.
 
-Unaffiliated English speakers tend to pronounce Joern like the first syllable
+Unaffiliated English speakers tend to pronounce it like the first syllable
 of "journey".
 
-I tend to switch my pronounciation of Joern depending on whom I am speaking to,
-to avoid confusion.
+I just tend to switch my pronunciation Joern depending on whom I am speaking
+to.
 
 ## Appendix: Dockerfile
 
-As mentioned in
-[Development Environmnet Setup](#development-environment-setup), the provided
+As mentioned in the
+[Development Environmnet Setup Section](#development-environment), the provided
 Joern Dockerfile does not work for me. I replaced the
-`.devcontainer/Dockerfile` file with the following:
+`.devcontainer/Dockerfile` with the following:
 
-```
+```dockerfile
 FROM debian:12
 
 # install git git-lfs
@@ -442,5 +491,5 @@ I use a Debian 12 environment in place of the original CentOS 7.9 one. I
 vaguely remember encountering a problem between VSCode server and CentOS,
 but I have not debugged the problem with the original Dockerfile.
 
-Note that I also installed PHP dependencies in order to use the Joern PHP
-frontend. These are only necessary if you intend to analyze PHP code.
+Note that I also install PHP dependencies to use the Joern PHP frontend. These
+are only necessary if you intend to analyze PHP code.
