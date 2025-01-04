@@ -20,7 +20,7 @@ staticDir = ['static']
         weight = 2
 
     [[menu.main]]
-        name = "Posts"
+        name = "Blog Posts"
         url = "/posts/"
         weight = 4
 
@@ -40,6 +40,7 @@ staticDir = ['static']
 
     # Used as the link for the "writings" title on the homepage
     mainSection = "posts"
+    mainSectionTitle = "Blog Posts"
 
     # Show only the 5 most recent posts (default)
     showAllPostsOnHomePage = false
