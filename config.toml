@@ -40,7 +40,7 @@ staticDir = ['static']
 
     # Used as the link for the "writings" title on the homepage
     mainSection = "posts"
-    mainSectionTitle = "Blog Posts"
+    #mainSectionTitle = "Blog Posts" # This is used in a newer version of cactus
 
     # Show only the 5 most recent posts (default)
     showAllPostsOnHomePage = false
