@@ -15,7 +15,7 @@ jobs:
 
     build:
         name: Generate content using Hugo.
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-24.04
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
         name: Upload to AWS S3 and invalidate in CloudFront.
         # Ensure that build job executes before deploy job.
         needs: build
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-24.04
         steps:
             - name: Download generated content for hosting
               uses: actions/download-artifact@v4
