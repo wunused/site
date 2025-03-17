@@ -1,6 +1,8 @@
 ---
 title: "Automating Deployments of this Site"
 date: 2021-06-03
+draft: false
+summary: An overview of the steps I took to deploy this site.
 ---
 
 * *Edited 2022-08-31*
