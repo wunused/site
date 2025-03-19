@@ -1,6 +1,8 @@
 ---
 title: "SQLite CVE-2022-35737 and Divergent Representations"
 date: 2023-05-12
+draft: false
+summary: A summary of publications around my discovery of CVE-2022-35737 and the compiler optimizations that enabled its exploitation.
 ---
 
 Last summer, I discovered and disclosed SQLite CVE-2022-35737 while working

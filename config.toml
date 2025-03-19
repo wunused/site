@@ -1,68 +1,36 @@
-baseurl = "https://www.wunused.com/"
+title = "-wunused"
+theme = "not-much"
 languageCode = "en-us"
-title = "-Wunused"
-theme = "cactus"                # https://github.com/monkeyWzr/hugo-theme-cactus
-defaultContentLanguage = "en"
+baseurl = "https://www.wunused.com/"
 staticDir = ['static']
-
-[author]
-    name = "Andreas"
 
 [menu]
     [[menu.main]]
-        name = "Home"
+        name = "home"
         url = "/"
         weight = 1
 
     [[menu.main]]
-        name = "About"
+        name = "about"
         url = "/about/"
         weight = 2
 
     [[menu.main]]
-        name = "Blog Posts"
-        url = "/posts/"
-        weight = 4
-
-    [[menu.main]]
-        name = "Publications"
+        name = "publications"
         url = "/publications/"
         weight = 3
 
+    [[menu.main]]
+        name = "blog"
+        url = "/posts/"
+        weight = 4
+
 [params]
-    dateform        = "Jan 2, 2006"
-    dateformShort   = "Jan 2"
-    dateformNum     = "2006-01-02"
-    dateformNumTime = "2006-01-02 15:04 -0700"
 
-    colortheme = "dark" # dark, light, white, or classic
-    description = "I'm Andreas. I am interested in computer system security."
-
-    # Used as the link for the "writings" title on the homepage
-    mainSection = "posts"
-    #mainSectionTitle = "Blog Posts" # This is used in a newer version of cactus
-
-    # Show only the 5 most recent posts (default)
-    showAllPostsOnHomePage = false
-    postsOnHomePage = 5
-
-    # Can show projects lists if this is enabled.
-    # showProjectsList = true
-    # projectsUrl = "https://github.com/wunused"
-
-    # Social Icons
-    # name key expects a Font Awesome Icon https://fontawesome.com/icons?d=gallery&p=2&s=brands
-    [[params.social]]
-        name = "github"
-        link = "https://github.com/wunused"
-
-    [[params.social]]
-        name = "twitter"
-        link = "https://twitter.com/__wunused__"
-
-    [[params.social]]
-        name = "email"
-        link = "andreas@wunused.com"
+    theme = "light"
+    palette = "catpuccin"
+    #showThemeNotice = true
+    showPostsSummary = true
 
 [markup]
     [markup.highlight]

@@ -1,6 +1,9 @@
 ---
 title: "Joern - Developer Notes"
 date: 2024-12-31
+draft: false
+toc: true
+summary: A collection of reference notes for contributing to the Joern project.
 ---
 
 [Joern](https://github.com/joernio/joern) is a great open-source static program
