@@ -5,3 +5,6 @@ analysis techniques to solve software security problems.
 
 I am supported by the National Defense Science and Engineering Graduate (NDSEG)
 Fellowship.
+
+I participate in CTF competitions and volunteer my time mentoring CU Cyber,
+Columbia's club for security-interested students.

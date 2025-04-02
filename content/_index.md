@@ -1,5 +1,3 @@
-I am interested in computer system security.
-
 Find me on [GitHub](https://github.com/wunused),
 [LinkedIn](https://www.linkedin.com/in/adkellas), [Google
 Scholar](https://scholar.google.com/citations?user=I57A47gAAAAJ), or e-mail:
