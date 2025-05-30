@@ -1,4 +1,4 @@
-Computer security researcher and Ph.D. student at Columbia University.
+Computer security researcher and Ph.D. candidate at Columbia University.
 
 Find me on [GitHub](https://github.com/wunused),
 [LinkedIn](https://www.linkedin.com/in/adkellas), [Google
