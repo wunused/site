@@ -2,6 +2,12 @@
 author: "Andreas"
 ---
 
+* [PickleBall: Secure Deserialization of Pickle-based Machine Learning Models](https://arxiv.org/abs/2508.15987) \
+    **Andreas D. Kellas**, Neophytos Christou, Wenxin Jiang, Penghui Li,
+    Laurent Simon, Yaniv David, Vasileios P. Kemerlis, James C. Davis, Junfeng
+    Yang \
+    *ACM Conference on Computer and Communications Security (CCS)*, Oct 2025.
+
 * [QUACK: Hindering Deserialization Attacks via Static Duck Typing](https://www.ndss-symposium.org/wp-content/uploads/2024-1015-paper.pdf) \
     Yaniv David, Neophytos Christou, **Andreas D. Kellas**, Vasileios P. Kemerlis, and Junfeng Yang \
     *Network and Distributed System Security Symposium (NDSS)*, Feb 2024.
