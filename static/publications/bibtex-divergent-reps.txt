@@ -1,0 +1,11 @@
+@inproceedings{10188620,
+  author={Kellas, Andreas D. and Cao, Alan and Goodman, Peter and Yang, Junfeng},
+  booktitle={2023 IEEE Security and Privacy Workshops (SPW)},
+  title={Divergent Representations: When Compiler Optimizations Enable Exploitation},
+  year={2023},
+  volume={},
+  number={},
+  pages={337-348},
+  keywords={Privacy;Codes;Program processors;Conferences;C++ languages;Software;Security},
+  doi={10.1109/SPW59333.2023.00035}
+}

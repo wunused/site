@@ -1,0 +1,15 @@
+@inproceedings{10.14722/ndss.2024.241015,
+    author = {David, Yaniv and Christou, Neophytos and Kellas, Andreas D. and Kemerlis, Vasileios P. and Yang, Junfeng},
+    title = {{QUACK}: {Hindering} {Deserialization} {Attacks} via {Static} {Duck} {Typing}},
+    url = {https://dx.doi.org/10.14722/ndss.2024.241015},
+    doi = {10.14722/ndss.2024.241015}
+    address = {San Diego, CA, USA},
+    location = {San Diego, CA, USA},
+    copyright = {All rights reserved},
+    isbn = {978-1-891562-93-8},
+    language = {en},
+    booktitle = {2024 {Network} and {Distributed} {System} {Security} {Symposium}},
+    publisher = {Internet Society},
+    year = {2024},
+    series = {NDSS '24}
+}

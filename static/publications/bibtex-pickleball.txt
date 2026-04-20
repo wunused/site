@@ -1,0 +1,16 @@
+@inproceedings{10.1145/3719027.3765037,
+    author = {Kellas, Andreas D. and Christou, Neophytos and Jiang, Wenxin and Li, Penghui and Simon, Laurent and David, Yaniv and Kemerlis, Vasileios P. and Davis, James C. and Yang, Junfeng},
+    title = {PickleBall: Secure Deserialization of Pickle-based Machine Learning Models},
+    year = {2025},
+    isbn = {9798400715259},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/3719027.3765037},
+    doi = {10.1145/3719027.3765037},
+    booktitle = {Proceedings of the 2025 ACM SIGSAC Conference on Computer and Communications Security},
+    pages = {3341–3355},
+    numpages = {15},
+    keywords = {deserialization attacks, secure model loading, supply chains},
+    location = {Taipei, Taiwan},
+    series = {CCS '25}
+}
