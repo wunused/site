@@ -2,7 +2,12 @@
 author: "Andreas"
 ---
 
-* [PickleBall: Secure Deserialization of Pickle-based Machine Learning Models](https://arxiv.org/abs/2508.15987) \
+* [PickleFuzzer: A Case Study in Fuzzing for Discrepancies Between Python Pickle Implementations](https://arxiv.org/pdf/2605.15084) \
+    Justin Applegate, **Andreas Kellas** \
+    *LangSec*, May 2026. \
+    [code](https://github.com/Legoclones/PickleFuzzer)
+
+* [PickleBall: Secure Deserialization of Pickle-based Machine Learning Models](https://dl.acm.org/doi/10.1145/3719027.3765037) \
     **Andreas D. Kellas**, Neophytos Christou, Wenxin Jiang, Penghui Li,
     Laurent Simon, Yaniv David, Vasileios P. Kemerlis, James C. Davis, Junfeng
     Yang \
