@@ -1,0 +1,15 @@
+@inproceedings{11573750,
+    author = { Applegate, Justin and Kellas, Andreas },
+    booktitle = { 2026 IEEE Symposium on Security and Privacy Workshops (SPW) },
+    title = {{ PickleFuzzer: A Case Study in Fuzzing for Discrepancies Between Python Pickle Implementations }},
+    year = {2026},
+    volume = {},
+    ISSN = {},
+    pages = {74-85},
+    keywords = {Modules (abstract algebra);Pickling;Python;Security;Modeling;Testing;Fuzzing;Payloads;Design methodology;Grammar},
+    doi = {10.1109/SPW72489.2026.00010},
+    url = {https://doi.ieeecomputersociety.org/10.1109/SPW72489.2026.00010},
+    publisher = {IEEE Computer Society},
+    address = {Los Alamitos, CA, USA},
+    month =May
+}

@@ -6,4 +6,4 @@ WORKDIR /site
 
 COPY . /site
 
-CMD hugo server --bind="0.0.0.0"
+CMD ["hugo", "server", "--bind=0.0.0.0"]

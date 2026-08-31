@@ -2,10 +2,18 @@
 author: "Andreas"
 ---
 
+* [Santa: Language Agnostic Automated System Call Policy Learning for Cloud Microservices](https://cs.brown.edu/people/vpk/papers/santa.dimva26.pdf) \
+    Meghna Pancholi, **Andreas D Kellas**, Kostis Kaffes, Steven M. Bellovin,
+    Simha Sethumadhavan, Vasileios P Kemerlis \
+    *Detection of Intrusions and Malware & Vulnerability Assessment* (DIMVA '26),
+    July 2026. \
+    [code](https://github.com/meghna-pancholi/santa-ebpf)
+
 * [PickleFuzzer: A Case Study in Fuzzing for Discrepancies Between Python Pickle Implementations](https://arxiv.org/pdf/2605.15084) \
     Justin Applegate, **Andreas Kellas** \
     *LangSec*, May 2026. \
-    [code](https://github.com/Legoclones/PickleFuzzer)
+    [code](https://github.com/Legoclones/PickleFuzzer),
+    [bibtex](/publications/bibtex-picklefuzzer.txt)
 
 * [PickleBall: Secure Deserialization of Pickle-based Machine Learning Models](https://dl.acm.org/doi/10.1145/3719027.3765037) \
     **Andreas D. Kellas**, Neophytos Christou, Wenxin Jiang, Penghui Li,
